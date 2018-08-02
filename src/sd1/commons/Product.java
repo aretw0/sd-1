@@ -26,7 +26,10 @@ public class Product {
 	static final int FOOD = 1; 
 	static final int PHONE = 2; 
 	static final int FURNITURE = 3;
+	
 	static final String[] types = {"None","Alimentos","Telefonia","Móveis"};
+	
+	static int codSeed = 0;
 	
 	static final int MINC = 100;
 	static final int MAXC = 999;
@@ -80,7 +83,8 @@ public class Product {
 	
 	public Product() {}
 	public Product(int type, double price, String name) {
-		this.cod = Product.MINC + (int)(this.generator.nextDouble() * ((Product.MAXC - Product.MINC) + 1));
+//		this.cod = Product.MINC + (int)(this.generator.nextDouble() * ((Product.MAXC - Product.MINC) + 1));
+		this.cod = Product.codSeed++;
 		this.type = type;
 		this.price = price;
 		this.name = name;
@@ -109,7 +113,7 @@ public class Product {
 		return "Código:\t" + this.cod + "\nTipo:\t" + Product.types[this.type] + "\nPreço:\t" + this.price + "\nNome:\t" + this.name + "\nQuantidade:\t" + this.amount;
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
 		Product p1 = new Product(Product.FOOD,7.89,"Frango");
 		
@@ -123,6 +127,6 @@ public class Product {
 		
 		System.out.println(p2.toString());
 		
-	}
+	}*/
 
 }

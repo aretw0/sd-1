@@ -86,6 +86,32 @@ public class ProductList {
 		return false;
 	}
 	
+	public Product getProduct(String name) {
+		for (Product product : productList) {
+			if (product.getName() == name) {
+				return product;
+			}
+		}
+		return null;
+	}
+	
+	public Product getProduct(int cod) {
+		for (Product product : productList) {
+			if (product.getCod() == cod) {
+				return product;
+			}
+		}
+		return null;
+	}
+	
+	public void updateList(List<Product> pl) {
+		for (Product product : pl) {
+			if (!this.update(product)) {
+				this.push(new Product(product));
+			}
+		}
+	}
+	
 	public void clear() {
 		this.productList.clear();
 	}
@@ -100,8 +126,7 @@ public class ProductList {
 		return result;
 	}
 	
-	public ProductList() {
-	}
+	public ProductList() {}
 	
 	// Cria uma nova lista a partir de outra sem pegar a referência
 	public ProductList(List<Product> pl) {
@@ -116,7 +141,7 @@ public class ProductList {
 		}
 	}
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ProductList pl = new ProductList();
 		
@@ -146,6 +171,6 @@ public class ProductList {
 		System.out.print(pl2.toString());
 		System.out.println();
 		
-	}*/
+	}
 
 }
