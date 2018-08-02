@@ -2,8 +2,6 @@ package sd1.commons;
 
 import java.util.Random;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
 public class Product {
@@ -21,6 +19,9 @@ public class Product {
 	@Expose
 	private String name;
 	
+	@Expose
+	private int amount;
+	
 	static final int NONE = 0; 
 	static final int FOOD = 1; 
 	static final int PHONE = 2; 
@@ -31,8 +32,6 @@ public class Product {
 	static final int MAXC = 999;
 	
 	private Random generator = new Random();
-	
-	static Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 	
 	public String getName() {
 		return name;
@@ -56,11 +55,27 @@ public class Product {
 		this.price = price;
 	}
 	
+	public int getAmount() {
+		return amount;
+	}
+	
+	public void setAmount(int a) {
+		this.amount = a;
+	}
+	
+	public void incAmount() {
+		++this.amount;
+	}
+	public void decAmount() {
+		--this.amount;
+	}
+	
 	public void setProduct(Product p) {
 		this.cod = p.getCod();
 		this.type = p.getType();
 		this.price = p.getPrice();
 		this.name = p.getName();
+		this.amount = p.getAmount();
 	}
 	
 	public Product() {}
@@ -69,6 +84,7 @@ public class Product {
 		this.type = type;
 		this.price = price;
 		this.name = name;
+		this.amount = 0;
 	}
 	
 	public Product(Product p) {
@@ -76,35 +92,37 @@ public class Product {
 		this.type = p.getType();
 		this.price = p.getPrice();
 		this.name = p.getName();
+		this.amount = p.getAmount();
 	}
 	
 	// usado so ao transferir 
-	public Product(int cod,int type, double price, String name) {
+	public Product(int cod,int type, double price, String name, int amount) {
 		this.cod = cod;
 		this.type = type;
 		this.price = price;
 		this.name = name;
+		this.amount = amount;
 	}
 	
 	@Override
 	public String toString() {
-		return "Código:\t" + this.cod + "\nTipo:\t" + Product.types[this.type] + "\nPreço:\t" + this.price + "\nNome:\t" + this.name;
+		return "Código:\t" + this.cod + "\nTipo:\t" + Product.types[this.type] + "\nPreço:\t" + this.price + "\nNome:\t" + this.name + "\nQuantidade:\t" + this.amount;
 	}
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		Product p1 = new Product(Product.FOOD,7.89,"Frango");
 		
 		System.out.println(p1.toString());
 		
-		String json = Product.gson.toJson(p1);
+		String json = JsonTools.gsonExpose.toJson(p1);
 		
 		System.out.println(json);
 		
-		Product p2 = Product.gson.fromJson(json, Product.class);
+		Product p2 = JsonTools.gsonExpose.fromJson(json, Product.class);
 		
 		System.out.println(p2.toString());
 		
-	}*/
+	}
 
 }

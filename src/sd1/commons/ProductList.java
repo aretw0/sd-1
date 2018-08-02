@@ -1,13 +1,19 @@
 package sd1.commons;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.reflect.TypeToken;
 
 public class ProductList {
 
-	private List<Product> productList;
+	@Expose
+	private List<Product> productList = new ArrayList<Product>();
 
+	public List<Product> getList() {
+		return this.productList;
+	}
 	public int getLength() {
 		return this.productList.size();
 	}
@@ -16,25 +22,60 @@ public class ProductList {
 		return this.productList.add(p);
 	}
 	
-	// só funciona se for a mesma referência
+	// Funciona se for a mesma referência ou o mesmo atributo cod
+	// Atenção: não estou olhando os outros atributos
 	public boolean contains(Product p) {
-		return this.productList.contains(p);
+		if (this.productList.contains(p)) {
+			return true;
+		} else {
+			for (Product product : productList) {
+				if (product.getCod() == p.getCod()) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
-	// só funciona se for a mesma referência
+	// Funciona se for a mesma referência ou o mesmo atributo cod
+	// Atenção: não estou olhando os outros atributos
 	public int indexOf(Product p) {
-		return this.productList.indexOf(p);
+		int i = this.productList.indexOf(p);
+		if (i == -1) {
+			for (Product product : productList) {
+				if (product.getCod() == p.getCod()) {
+					return this.productList.indexOf(product);
+				}
+			}
+		}
+		return i;
 	}
 	
-	// só funciona se for a mesma referência
+	// Funciona se for a mesma referência ou o mesmo atributo cod
+	// Atenção: não estou olhando os outros atributos
 	public boolean remove(Product p) {
-		return this.productList.remove(p);
+		if (!this.productList.remove(p)) {
+			for (Product product : productList) {
+				if (product.getCod() == p.getCod()) {
+					return this.productList.remove(product);
+				}
+			}
+		} else {
+			return true;
+		}
+		return false;
 	}
-	public boolean remove(int i) {
-		return this.productList.remove(i) != null;
+	// Funciona se for o mesmo atributo cod
+	public boolean remove(int cod) {
+		for (Product product : productList) {
+			if (product.getCod() == cod) {
+				return this.productList.remove(product);
+			}
+		}
+		return false;
 	}
 	
-	// se estiver com a referencia não precisa usar isso aqui, é só alterar a referência
+	// Se estiver com a referencia não precisa usar isso aqui, é só alterar a referência
 	public boolean update(Product p) {
 		for (Product product : productList) {
 			if (product.getCod() == p.getCod()) {
@@ -60,37 +101,51 @@ public class ProductList {
 	}
 	
 	public ProductList() {
-		this.productList = new ArrayList<Product>();
-	}
-	public ProductList(ArrayList<Product> pl) {
-//		this.productList = new ArrayList<Product>(pl);
-		this.productList = pl;
 	}
 	
-	public static void main(String[] args) {
+	// Cria uma nova lista a partir de outra sem pegar a referência
+	public ProductList(List<Product> pl) {
+		for (Product product : pl) {
+			this.productList.add(new Product(product));
+		}
+	}
+	// Cria uma nova lista a partir de outra sem pegar a referência
+	public ProductList(ProductList pl) {
+		for (Product product : pl.getList()) {
+			this.productList.add(new Product(product));
+		}
+	}
+	
+	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ProductList pl = new ProductList();
 		
 		Product p1 = new Product(Product.FOOD,7.89,"Carne");
 		Product p2 = new Product(Product.FOOD,5,"Frango");
-		Product p3 = new Product(p1);
-		p3.setName("Presunto");
 		
 		pl.push(p1);
 		pl.push(p2);
 		
-//		System.out.print(pl.toString());
-//		System.out.println(pl.update(p3));
-//		System.out.println(pl.remove(p1));
-		System.out.println(pl.indexOf(p1));
 		
-//		System.out.println();
-//		System.out.print(pl.toString());
+		System.out.print(pl.toString());
+		System.out.println();
+//		String json = JsonTools.gsonExpose.toJson(pl);
 		
-//		exemplo de referencia
-//		p1.setName("Presunto");
-//		System.out.println(pl.toString());
+		String json = JsonTools.gsonExpose.toJson(pl.getList());
+		System.out.println(json);
+		System.out.println();
 		
-	}
+//		ProductList pl2 = JsonTools.gsonExpose.fromJson(json, ProductList.class);
+		
+//		List<Product> pds = JsonTools.gsonExpose.fromJson(json, new TypeToken<List<Product>>(){}.getType());
+//		List<Product> pds = JsonTools.PLFromJson(json);
+		
+		ProductList pl2 = new ProductList(JsonTools.PLFromJson(json));
+		
+		
+		System.out.print(pl2.toString());
+		System.out.println();
+		
+	}*/
 
 }
