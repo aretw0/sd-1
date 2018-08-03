@@ -22,14 +22,14 @@ public class Product {
 	@Expose
 	private int amount;
 	
-	static final int NONE = 0; 
-	static final int FOOD = 1; 
-	static final int PHONE = 2; 
-	static final int FURNITURE = 3;
+	public static final int NONE = 0; 
+	public static final int FOOD = 1; 
+	public static final int PHONE = 2; 
+	public static final int FURNITURE = 3;
 	
-	static final String[] types = {"None","Alimentos","Telefonia","Móveis"};
+	public static final String[] types = {"None","Alimentos","Telefonia","Móveis"};
 	
-	static int codSeed = 0;
+	private static int codSeed = 0;
 	
 	static final int MINC = 100;
 	static final int MAXC = 999;

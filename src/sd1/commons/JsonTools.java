@@ -7,10 +7,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 public class JsonTools {
-	static final Gson gsonExpose = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-	static final Gson gson = new Gson();
+	public static final Gson gsonExpose = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+	public static final Gson gson = new Gson();
 	
-	static List<Product> PLFromJson(String json) {
+	public static List<Product> PLFromJson(String json) {
 		return JsonTools.gsonExpose.fromJson(json, new TypeToken<List<Product>>(){}.getType());
 	}
 }
