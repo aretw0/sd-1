@@ -4,7 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 import java.util.Scanner;
+
+import sd1.commons.*;
 
 public class SimpleClient {
 	
@@ -12,8 +15,12 @@ public class SimpleClient {
 
 	public static void main(String args []) throws IOException{ 
 
-        String s = "";
+        String req = "";
+        String res = "";
+        
+        Request rq = new Request(Request.LIS,null);
 
+        req = JsonTools.gsonExpose.toJson(rq);
 		// Conectar ao servidor 
 		Socket client = new Socket("localhost", 5000);
 
@@ -23,20 +30,36 @@ public class SimpleClient {
 		// Cria canal para enviar dados 
 		DataOutputStream out = new DataOutputStream(client.getOutputStream()); 
 
-		sc = new Scanner(System.in);
-		System.out.println("Digite um valor entre 0 e 9");
+//		sc = new Scanner(System.in);
+//		System.out.println("Digite um valor entre 0 e 9");
 		
-		s = sc.nextLine();
+//		s = sc.nextLine();
+//		Product p1 = new Product(Product.FOOD,7.89,"Carne");
+//		s = JsonTools.gsonExpose.toJson(p1);
 		 
 		//k = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite um valor entre 0 e 9.")); 
 
 //		System.out.println("\n\n <-- Valor enviado ao servidor: "+ k); 
 
-		out.writeUTF(s); 
+		out.writeUTF(req); 
 
-		s = in.readUTF(); //Aguarda o recebimento de uma string. 
+		res = in.readUTF(); //Aguarda o recebimento de uma string. 
+		
+		Response rs = JsonTools.gsonExpose.fromJson(res, Response.class);
+		
+		if (rs.getData() != null) {
+			System.out.println("Mas o que!!");
+//			System.out.println(rs.getClass().toString());
+			
+			// IMPORTANTE FORMA DE RECUPERAÇÃO DA LISTA!!!!
+			ProductList pl = new ProductList(JsonTools.PLFromJson(rs.getData().toString()));
+			System.out.println("\n\n --> Mensagem recebida \nValor por extenso é:\n"+ pl.toString()); 
+		} else {
+			System.out.println("Mas como!!");
+		}
 
-		System.out.println("\n\n --> Mensagem recebida \nValor por extenso é: "+ s + "\n\n"); 
+//		System.out.println("\n\n --> Mensagem recebida \nValor por extenso é:\n"+ res + "\n\n"); 
+//		System.out.println("\n\n --> Mensagem recebida \nValor por extenso é:\n"+ rs.getData()); 
 
 		//Fecha os canais de entrada e saída. 
 		in.close(); 
