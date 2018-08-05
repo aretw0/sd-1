@@ -155,7 +155,21 @@ public class ProductList {
 	}
 	public boolean update(ProductChange p) {
 		for (Product product : productList) {
+			if ((product.getCod() == p.getCod()) && (product.getCod() != p.getOldCod())) {
+				return false;
+			}
+			if (product.getName().equals(p.getName())) {
+				if (product.getCod() != p.getOldCod()) {
+					return false;
+				}
+			}
+			
 			if (product.getCod() == p.getOldCod()) {
+				if (product.getName() != p.getName()) {
+					if (contains(p.getName())) {
+						return false;
+					}
+				}
 				product.setProduct(p);
 				return true;
 			}
