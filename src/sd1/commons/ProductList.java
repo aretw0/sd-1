@@ -10,7 +10,7 @@ public class ProductList {
 
 	@Expose
 	private List<Product> productList = new ArrayList<Product>();
-
+	
 	public boolean equals(List<Product> pl) {
 		if (this.productList.size() == pl.size()) {
 			for (Product product : pl) {
@@ -39,15 +39,43 @@ public class ProductList {
 
 	// Retirando a referência sempre
 	public boolean push(Product p) {
-		if (contains(p.getCod())) {
+		if (contains(p.getCod(),p.getName())) {
+			return false;
+		}
+		return this.productList.add(new Product(p));
+	}
+	// Retirando a referência sempre
+	public boolean push(ProductTemp p) {
+		if (contains(p.getName())) {
 			return false;
 		}
 		return this.productList.add(new Product(p));
 	}
 	
+	// Se igual o cod contém
 	public boolean contains(int cod) {
 		for (Product product : productList) {
 			if (product.getCod() == cod) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// se igual o nome contém
+	public boolean contains(String name) {
+		for (Product product : productList) {
+			if (product.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// Se igual o cod ou o nome contém
+	public boolean contains(int cod,String name) {
+		for (Product product : productList) {
+			if ((product.getName().equals(name)) || (product.getCod() == cod)) {
 				return true;
 			}
 		}
@@ -105,6 +133,17 @@ public class ProductList {
 		return false;
 	}
 	
+	public boolean remove(String name) {
+//		System.out.println(name);
+		for (Product product : this.productList) {
+			// Por algum motivo a string do Gson vem diferente então precisa ser comparado assim
+			if (product.getName().equals(name)) {
+				return this.productList.remove(product);
+			}
+		}
+		return false;
+	}
+	
 	public boolean update(Product p) {
 		for (Product product : productList) {
 			if (product.getCod() == p.getCod()) {
@@ -114,16 +153,39 @@ public class ProductList {
 		}
 		return false;
 	}
+	public boolean update(ProductChange p) {
+		for (Product product : productList) {
+			if (product.getCod() == p.getOldCod()) {
+				product.setProduct(p);
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public Product getProduct(String name) {
 		for (Product product : productList) {
-			if (product.getName() == name) {
+			if (product.getName().equals(name)) {
 				return product;
 			}
 		}
 		return null;
 	}
 	
+	public boolean buyProduct(Product pd) {
+		Product pB = getProduct(pd.getCod());
+		if (pB == null) {
+			return false;
+		}
+		return pB.decAmount();
+	}
+	public boolean buyProduct(int cod) {
+		Product pB = getProduct(cod);
+		if (pB == null) {
+			return false;
+		}
+		return pB.decAmount();
+	}
 	public Product getProduct(int cod) {
 		for (Product product : productList) {
 			if (product.getCod() == cod) {
@@ -161,7 +223,7 @@ public class ProductList {
 			this.productList.add(new Product(product));
 		}
 	}
-	
+
 	public void setProductList(List<Product> pl) {
 		clear();
 		for (Product product : pl) {
@@ -184,11 +246,13 @@ public class ProductList {
 		}
 	}
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Product p1 = new Product(Product.FOOD,7.89,"Carne");
-		Product p2 = new Product(Product.FOOD,5,"Frango");
+		Product p1 = new Product(Product.FOOD,7.89,"Carne",8);
+		Product p2 = new Product(Product.FOOD,5,"Pastel",5);
+		
+		Product p3 = new Product(Product.FOOD,7.89,"Carne",8);
 		
 		
 		ProductList pl = new ProductList();
@@ -196,18 +260,21 @@ public class ProductList {
 		pl.push(p1);
 		pl.push(p2);
 		
-		List<Product> ps = pl.copy();
+//		List<Product> ps = pl.copy();
 //		ps.add(p1);
 //		ps.add(p2);
 		
 		System.out.print(pl.toString());
 		System.out.println();
 		
-		for (Product product : ps) {
-			System.out.println(product.toString() +  "\n\n");
-		}
+		System.out.println(pl.buyProduct(p1));
 		
-		System.out.println(pl.equals(ps));
+		System.out.print(pl.toString());
+		System.out.println();
+		
+		
+		
+//		System.out.println(pl.contains("Pastel"));
 		
 //		String json = JsonTools.gsonExpose.toJson(pl);
 		
@@ -226,6 +293,6 @@ public class ProductList {
 //		System.out.print(pl2.toString());
 //		System.out.println();
 		
-	}*/
+	}
 
 }

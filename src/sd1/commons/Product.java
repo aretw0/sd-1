@@ -32,15 +32,15 @@ public class Product {
 	
 	public static final String[] types = {"None","Alimentos","Telefonia","Móveis"};
 	
-	private static int codSeed = 0;
+	private static int codSeed = 1;
 	
-	static final int MINC = 100;
-	static final int MAXC = 999;
+//	static final int MINC = 100;
+//	static final int MAXC = 999;
 	
 //	private Random generator = new Random();
-	
+
 	public boolean isEmpty() {
-		return this.empty;
+		return (this.name == null) && (this.cod == 0);
 	}
 	
 	public String getName() {
@@ -51,6 +51,9 @@ public class Product {
 	}
 	public int getCod() {
 		return cod;
+	}
+	public void setCod(int cod) {
+		this.cod = cod;
 	}
 	public int getType() {
 		return type;
@@ -76,15 +79,26 @@ public class Product {
 	public void incAmount() {
 		++this.amount;
 	}
-	public void decAmount() {
-		--this.amount;
+	public boolean decAmount() {
+		if (this.amount > 0) {			
+			--this.amount;
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean equals(Product p) {
-		return ((p.getCod() == this.cod)&&(p.getName() == this.name)&&(p.getAmount() == this.amount) && (p.getType() == this.type)&&(p.getPrice() == this.price));
+		return ((p.getCod() == this.cod)&&(this.name.equals(p.getName()))&&(p.getAmount() == this.amount) && (p.getType() == this.type)&&(p.getPrice() == this.price));
 	}
 	
 	public void setProduct(Product p) {
+		this.cod = p.getCod();
+		this.type = p.getType();
+		this.price = p.getPrice();
+		this.name = p.getName();
+		this.amount = p.getAmount();
+	}
+	public void setProduct(ProductChange p) {
 		this.cod = p.getCod();
 		this.type = p.getType();
 		this.price = p.getPrice();
@@ -100,7 +114,13 @@ public class Product {
 		this.price = price;
 		this.name = name.replace(' ', '_');
 		this.amount = 0;
-		this.empty = false;
+	}
+	public Product(int type, double price, String name, int amount) {
+		this.cod = Product.codSeed++;
+		this.type = type;
+		this.price = price;
+		this.name = name.replace(' ', '_');
+		this.amount = amount;
 	}
 	
 	public Product(Product p) {
@@ -109,7 +129,6 @@ public class Product {
 		this.price = p.getPrice();
 		this.name = p.getName();
 		this.amount = p.getAmount();
-		this.empty = false;
 	}
 	
 	// usado so ao transferir 
@@ -119,7 +138,15 @@ public class Product {
 		this.price = p.getPrice();
 		this.name = p.getName().replace(' ', '_');
 		this.amount = p.getAmount();
-		this.empty = false;
+	}
+	
+	// usado so ao transferir 
+	public Product(ProductChange p) {
+		this.cod = p.getCod();
+		this.type = p.getType();
+		this.price = p.getPrice();
+		this.name = p.getName().replace(' ', '_');
+		this.amount = p.getAmount();
 	}
 	
 	@Override
@@ -127,14 +154,14 @@ public class Product {
 		return "\nCódigo:\t\t" + this.cod + "\nTipo:\t\t" + Product.types[this.type] + "\nPreço:\t\t" + this.price + "\nNome:\t\t" + this.name + "\nQuantidade:\t" + this.amount;
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		
-	/*	Product p = new Product();
+		Product p = new Product();
 		if (p.isEmpty()) {
 			System.out.println("Null");
 		} else {
 			System.out.println("Não null" + p.getName());
-		}*/
+		}
 //		Product p1 = new Product(Product.FOOD,7.89,"Frango");
 //		Product p2 = new Product(p1);
 //		
@@ -150,6 +177,6 @@ public class Product {
 //		
 //		System.out.println(p2.equals(p1));
 		
-	}
+	}*/
 
 }

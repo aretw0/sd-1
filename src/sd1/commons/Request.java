@@ -11,9 +11,10 @@ public class Request {
 	public static final int UPD = 6; 	// Atualizar Produto
 	public static final int REF = 7; 	// Inscrição no pool de atualização da lista
 	public static final int AMO = 8; 	// Quantidade de produtos
-	public static final int CLO = 9; 	// Fechar pool para este cliente
-	public static final int SHS = 10; 	// Shutdown Server
-	public static final int SHSC = 11; 	// Shutdown Server confirmação	
+	public static final int BUY = 9;	// Comprar produto
+	public static final int CLO = 10; 	// Fechar pool para este cliente
+	public static final int SHS = 11; 	// Shutdown Server
+	public static final int SHSC = 12; 	// Shutdown Server confirmação	
 	
 	@Expose
 	private int cod;

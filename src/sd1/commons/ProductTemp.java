@@ -11,7 +11,7 @@ public class ProductTemp {
 	
 	@Expose
 	private String name;
-	
+
 	@Expose
 	private int amount;
 	
@@ -46,12 +46,23 @@ public class ProductTemp {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	
+	@Override
+	public String toString() {
+		return "\nTipo:\t\t" + Product.types[this.type] + "\nPreço:\t\t" + this.price + "\nNome:\t\t" + this.name + "\nQuantidade:\t" + this.amount;
+	}
 
 	public ProductTemp(int type, double price, String name, int amount) {
 		this.type = type;
 		this.price = price;
 		this.name = name;
 		this.amount = amount;
+	}
+	public ProductTemp(int type, double price, String name) {
+		this.type = type;
+		this.price = price;
+		this.name = name;
+		this.amount = 0;
 	}
 	public ProductTemp() {}
 	

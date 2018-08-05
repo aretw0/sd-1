@@ -7,19 +7,30 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import sd1.commons.*;
+import sd1.threads.ClientPool;
 
 public class StoreClient {
-	private static ProductList pl = new ProductList();
+	private static ProductList pdl = new ProductList();
 	private static boolean poolStarted = false;
 	private static boolean poolClose = false;
 	private static String hostAdd = "localhost";
 	private static int hostPort = 5000;
 	
-	private static ProductList getPl() {
-		return pl;
+	public static boolean hasPoolStarted() {
+		return StoreClient.poolStarted;
 	}
-	private static void setPl(ProductList listP) {
-		pl.setProductList(pl);
+	public static boolean hasPoolClose() {
+		return StoreClient.poolClose;
+	}
+	public static void setflagPoolSt(boolean flag) {
+		StoreClient.poolStarted = flag;
+	}
+	public static void setflagPoolCl(boolean flag) {
+		StoreClient.poolClose = flag;
+	}
+	
+	public static ProductList getPdl() {
+		return StoreClient.pdl;
 	}
 	
 	public static String getHostAdd() {
@@ -59,7 +70,7 @@ public class StoreClient {
 		return null;
 	}
 	
-	private static DataInputStream getInputSt(Socket client) {
+	public static DataInputStream getInputSt(Socket client) {
 		
 		try {
 			// Cria canal para receber dados 
@@ -72,7 +83,7 @@ public class StoreClient {
 		return null;
 	}
 	
-	private static DataOutputStream getOutputSt(Socket client) {
+	public static DataOutputStream getOutputSt(Socket client) {
 		
 		try {
 			// Cria canal para enviar dados 
@@ -85,7 +96,7 @@ public class StoreClient {
 		return null;
 	}
 	
-	private static boolean sendReq(DataOutputStream out, String req) {
+	public static boolean sendReq(DataOutputStream out, String req) {
 		try {
 			out.writeUTF(req);
 			return true;
@@ -95,7 +106,7 @@ public class StoreClient {
 			return false;
 		}
 	}
-	private static String catchRes(DataInputStream in) {
+	public static String catchRes(DataInputStream in) {
 		try {
 			return in.readUTF();
 		} catch (IOException e) {
@@ -105,14 +116,6 @@ public class StoreClient {
 		}
 	}
 	
-	public static void StartListPool() {
-		poolStarted = true;
-		System.out.println("\nIniciando Pool da Lista!\n");
-		/*while(!poolClose) {
-			System.out.println("\nIteração do Pool!\n");
-		}*/
-		
-	}
 	
 	public static Response doRequest(Request req) {
 		
@@ -129,8 +132,8 @@ public class StoreClient {
 		// Se chegou aqui é por que deu tudo certo na abertura da conexão
 		// e dos canais de entrada e saída
 		
-		// Debug
-		System.out.println("\n-- A enviar --\n" + req.toString());
+		// Debug 1
+//		System.out.println("\n-- A enviar --\n" + req.toString());
 		// String da requisição
 		if (!sendReq(out, JsonTools.gsonExpose.toJson(req))) {
 			return null;
@@ -161,8 +164,8 @@ public class StoreClient {
 		if (res == null) {
 			return null;
 		}
-		// Debug
-		System.out.println("\n-- Recebido --\n" + res.toString());
+		// Debug 2
+//		System.out.println("\n-- Recebido --\n" + res.toString());
 		// Deu ruim?
 		if ((res.getCod() == Response.FAIL) || (res.getCod() == Response.NOT_FOUND)) {
 			
@@ -265,7 +268,96 @@ public class StoreClient {
 			return false;
 		}
 		
+		return (res.getCod() == Response.SUCCESS);
+	}
+	public static boolean updProduct(ProductChange pd) {
+		Response res = doRequest(new Request(Request.UPD,pd));
+		
+		if (res == null) {
+			return false;
+		}
+		
+		return (res.getCod() == Response.SUCCESS);
+	}
+	
+	public static boolean startPoolList() {
+//		StoreClient.poolStarted = true;
+		if (StoreClient.poolStarted) {
+			System.out.println("\nPool da Lista ja iniciado!\n");
+		} else {
+			
+			System.out.println("\nIniciando Pool da Lista!\n");
+			Thread t = new Thread(new ClientPool());
+			t.start();
+			
+			while (!StoreClient.poolStarted) {
+				if (StoreClient.poolClose) {
+					break;
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return StoreClient.poolStarted;
+	}
+	public static boolean stopPoolList() {
+		if (!StoreClient.poolClose) {
+			Response res = doRequest(new Request(Request.CLO));
+			
+			if (res == null) {
+				return false;
+			}
+			StoreClient.setflagPoolCl(true);
+			
+			while(StoreClient.hasPoolStarted()) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		return true;
+	}
+	
+	public static int getAmtProducts() {
+		Response res = doRequest(new Request(Request.AMO));
+		if (res == null) {			
+			return -1;
+		}
+		
+		// Não há nada
+		if (res.getData() == null) {
+			return -1;
+		}
+		
+		return Integer.parseInt(res.getData().toString());
+	}
+	
+	public static boolean buyProduct(Product pd) {
+		Response res = doRequest(new Request(Request.BUY,pd));
+		
+		if (res == null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public static boolean buyProduct(int cod) {
+		Response res = doRequest(new Request(Request.BUY,Integer.toString(cod)));
+		
+		if (res == null) {
+			return false;
+		}
+		
+		return (res.getCod() == Response.SUCCESS);
 	}
 	
 	public static boolean shutDownServer() {
@@ -291,15 +383,72 @@ public class StoreClient {
 //		testServer();
 //		System.out.println("\nEndereço de servidor: "+ getHostAdd() +"\n");
 //		StartListPool();
-		ProductList pla = getList();
+	
 		
+		/*ProductList pla = getList();
 		
-		/*if (pla != null) {
+		if (pla != null) {
 			System.out.println("\n\n --> Lista recebida \nValor por extenso é:\n"+ pla.toString());
-		}*/	
+		}*/
 		
-		if (shutDownServer()) {
-			 shutdownServerConfirm();
+		
+//		delProduct("Maconha");
+		boolean pool = startPoolList();
+		System.out.println(pool);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
+		addProduct(new ProductTemp(Product.FOOD,24.55,"Maconha"));
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
+		
+		System.out.println(delProduct("Pastel"));
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
+//		System.out.println(getProduct(1));
+//		System.out.println(getAmtProducts());
+		System.out.println(buyProduct(1));
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
+//		System.out.println(getProduct(1));
+		/*Product p = getProduct("Pastel");
+		p.setName("Filós");
+		System.out.println(updProduct(new ProductChange(p.getCod(),p)));
+		
+		pla = getList();
+		
+		if (pla != null) {
+			System.out.println("\n\n --> Lista recebida \nValor por extenso é:\n"+ pla.toString());
+		}*/
+		
+		if (pool) {
+			System.out.println(stopPoolList());
+			if (shutDownServer()) {
+				 shutdownServerConfirm();
+			}
+		} else {
+			if (shutDownServer()) {
+				 shutdownServerConfirm();
+			}
 		}
 	}
 }

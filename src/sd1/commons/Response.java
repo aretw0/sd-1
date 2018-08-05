@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 public class Response {
 	public static final int SUCCESS = 200;
 	public static final int FAIL = 500;
-	public static final int NOTMOD = 304;
+	public static final int NOT_MOD = 304;
 	public static final int NOT_FOUND = 404;
 	
 	@Expose
