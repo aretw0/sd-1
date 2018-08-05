@@ -15,7 +15,8 @@ public class Product {
 	
 	@Expose
 	private double price;
-	
+	// Problemas com a conversão da lib GSON implica que esse campo não pode ter espaços em branco
+	// Por isso estou adicionando um replace em qualquer entrada desse campo, todo espaço vira agora "_"
 	@Expose
 	private String name;
 	
@@ -46,7 +47,7 @@ public class Product {
 		return name;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.replace(' ', '_');
 	}
 	public int getCod() {
 		return cod;
@@ -97,7 +98,7 @@ public class Product {
 		this.cod = Product.codSeed++;
 		this.type = type;
 		this.price = price;
-		this.name = name;
+		this.name = name.replace(' ', '_');
 		this.amount = 0;
 		this.empty = false;
 	}
@@ -116,14 +117,14 @@ public class Product {
 		this.cod = Product.codSeed++;
 		this.type = p.getType();
 		this.price = p.getPrice();
-		this.name = p.getName();
+		this.name = p.getName().replace(' ', '_');
 		this.amount = p.getAmount();
 		this.empty = false;
 	}
 	
 	@Override
 	public String toString() {
-		return "Código:\t" + this.cod + "\nTipo:\t" + Product.types[this.type] + "\nPreço:\t" + this.price + "\nNome:\t" + this.name + "\nQuantidade:\t" + this.amount;
+		return "\nCódigo:\t\t" + this.cod + "\nTipo:\t\t" + Product.types[this.type] + "\nPreço:\t\t" + this.price + "\nNome:\t\t" + this.name + "\nQuantidade:\t" + this.amount;
 	}
 	
 	public static void main(String[] args) {
