@@ -5,7 +5,8 @@ import com.google.gson.annotations.Expose;
 public class Response {
 	public static final int SUCCESS = 200;
 	public static final int FAIL = 500;
-	public static final int ERROR = 404;
+	public static final int NOTMOD = 304;
+	public static final int NOT_FOUND = 404;
 	
 	@Expose
 	private int cod;
@@ -38,6 +39,10 @@ public class Response {
 		this.cod = cod;
 		this.data = data;
 	}
-	public Response() {}
-	
+	public Response(int cod) {
+		// TODO Auto-generated constructor stub
+		this.cod = cod;
+		this.data = null;
+	}
+	public Response() {}	
 }

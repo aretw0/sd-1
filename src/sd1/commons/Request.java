@@ -3,13 +3,17 @@ package sd1.commons;
 import com.google.gson.annotations.Expose;
 
 public class Request {
-	public static final int ADD = 1;
-	public static final int DEL = 2;
-	public static final int LIS = 3;
-	public static final int SEA = 4;
-	public static final int UPD = 5;
-	public static final int REF = 6;
-	public static final int AMO = 7;
+	public static final int ADD = 1; 	// Adicionar Produto 
+	public static final int DEL = 2; 	// Remover Produto
+	public static final int LIS = 3; 	// Listar Produtos
+	public static final int SEA_N = 4; 	// Procurar Produto por nome
+	public static final int SEA_C = 5; 	// Procurar Produto por código
+	public static final int UPD = 6; 	// Atualizar Produto
+	public static final int REF = 7; 	// Inscrição no pool de atualização da lista
+	public static final int AMO = 8; 	// Quantidade de produtos
+	public static final int CLO = 9; 	// Fechar pool para este cliente
+	public static final int SHS = 10; 	// Shutdown Server
+	public static final int SHSC = 11; 	// Shutdown Server confirmação	
 	
 	@Expose
 	private int cod;
