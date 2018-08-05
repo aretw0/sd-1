@@ -100,7 +100,7 @@ public class StoreClient {
 		try {
 			out.writeUTF(req);
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
@@ -109,7 +109,7 @@ public class StoreClient {
 	public static String catchRes(DataInputStream in) {
 		try {
 			return in.readUTF();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
@@ -373,82 +373,64 @@ public class StoreClient {
 		doRequest(new Request(Request.SHSC));
 	}
 	
+	public static void testPoolServer() {
+		// Abaixo um teste
+				boolean pool = startPoolList();
+				System.out.println(pool);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
+				addProduct(new ProductTemp(Product.FOOD,24.55,"Maconha"));
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
+				
+				System.out.println(delProduct("Pastel"));
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
+//				System.out.println(getProduct(1));
+//				System.out.println(getAmtProducts());
+				System.out.println(buyProduct(1));
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
+				
+				if (pool) {
+					System.out.println(stopPoolList());
+					if (shutDownServer()) {
+						 shutdownServerConfirm();
+					}
+				} else {
+					if (shutDownServer()) {
+						 shutdownServerConfirm();
+					}
+				}
+	}
+	
+	
 	public static void main(String args []) throws IOException{
-		// Conectar ao servidor 
-//		Socket client = new Socket("localhost", 5000);
-		
-		//Fecha o socket. 
-//		client.close(); 
+
 		
 //		testServer();
-//		System.out.println("\nEndereço de servidor: "+ getHostAdd() +"\n");
-//		StartListPool();
+		testPoolServer();
 	
 		
-		/*ProductList pla = getList();
-		
-		if (pla != null) {
-			System.out.println("\n\n --> Lista recebida \nValor por extenso é:\n"+ pla.toString());
-		}*/
-		
-		
-//		delProduct("Maconha");
-		boolean pool = startPoolList();
-		System.out.println(pool);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
-		addProduct(new ProductTemp(Product.FOOD,24.55,"Maconha"));
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
-		
-		System.out.println(delProduct("Pastel"));
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
-//		System.out.println(getProduct(1));
-//		System.out.println(getAmtProducts());
-		System.out.println(buyProduct(1));
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("\n\n --> Lista Valor por extenso:\n"+ pdl.toString());
-//		System.out.println(getProduct(1));
-		/*Product p = getProduct("Pastel");
-		p.setName("Filós");
-		System.out.println(updProduct(new ProductChange(p.getCod(),p)));
-		
-		pla = getList();
-		
-		if (pla != null) {
-			System.out.println("\n\n --> Lista recebida \nValor por extenso é:\n"+ pla.toString());
-		}*/
-		
-		if (pool) {
-			System.out.println(stopPoolList());
-			if (shutDownServer()) {
-				 shutdownServerConfirm();
-			}
-		} else {
-			if (shutDownServer()) {
-				 shutdownServerConfirm();
-			}
-		}
 	}
 }

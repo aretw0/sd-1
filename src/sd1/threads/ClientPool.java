@@ -48,14 +48,6 @@ public class ClientPool implements Runnable {
 								
 								while (!StoreClient.hasPoolClose()) {
 									rs = StoreClient.catchRes(in);
-									/*try {										
-										
-										
-									} catch (Exception e1) {
-										e1.printStackTrace();
-										StoreClient.setflagPoolCl(true);
-										break;
-									}*/
 									
 									if (rs != null) {
 										res = JsonTools.gsonExpose.fromJson(rs, Response.class);
