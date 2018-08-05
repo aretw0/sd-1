@@ -39,10 +39,22 @@ public class ProductList {
 
 	// Retirando a referência sempre
 	public boolean push(Product p) {
+		if (contains(p.getCod())) {
+			return false;
+		}
 		return this.productList.add(new Product(p));
 	}
 	
-	// Funciona se for a mesma referência ou os mesmos atributos 
+	public boolean contains(int cod) {
+		for (Product product : productList) {
+			if (product.getCod() == cod) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	// Funciona se for a mesma referência ou os mesmos atributos
 	public boolean contains(Product p) {
 		if (this.productList.contains(p)) {
 			return true;
@@ -141,6 +153,20 @@ public class ProductList {
 			result += (product.toString() + "\n\n");
 		}
 		return result;
+	}
+	
+	public void setProductList(ProductList pl) {
+		clear();
+		for (Product product : pl.getList()) {
+			this.productList.add(new Product(product));
+		}
+	}
+	
+	public void setProductList(List<Product> pl) {
+		clear();
+		for (Product product : pl) {
+			this.productList.add(new Product(product));
+		}
 	}
 	
 	public ProductList() {}
