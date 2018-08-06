@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sd1.view.ViewController">
+   <children>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="553.0" prefWidth="800.0">
+         <children>
+            <TableView fx:id="productTableCliente" layoutX="14.0" layoutY="42.0" prefHeight="511.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="380.0" AnchorPane.topAnchor="42.0">
+               <columns>
+                  <TableColumn fx:id="clmncod" editable="false" prefWidth="57.0" text="Cod" />
+                  <TableColumn fx:id="clmnname" editable="false" prefWidth="135.0" text="Nome" />
+                  <TableColumn fx:id="clmntype" editable="false" prefWidth="63.0" text="Tipo" />
+                  <TableColumn fx:id="clmnprice" editable="false" prefWidth="66.0" text="Preço" />
+                  <TableColumn fx:id="clmnamount" editable="false" prefWidth="98.0" text="Quantidade" />
+               </columns>
+            </TableView>
+            <Label layoutX="497.0" layoutY="207.0" text="Nome:" />
+            <Label layoutX="547.0" layoutY="154.0" text="Produto Selecionado:" />
+            <Label layoutX="503.0" layoutY="252.0" text="Tipo:" />
+            <Label layoutX="499.0" layoutY="302.0" text="Preço:" />
+            <TextField fx:id="searchField" layoutX="68.0" layoutY="6.0" promptText="buscar" />
+            <TextField fx:id="nameField" layoutX="546.0" layoutY="202.0" />
+            <TextField fx:id="typeField" layoutX="546.0" layoutY="248.0" />
+            <TextField fx:id="priceField" layoutX="546.0" layoutY="297.0" />
+            <Button fx:id="buyProduct" layoutX="579.0" layoutY="389.0" mnemonicParsing="false" onAction="#buyProduct" text="Comprar" />
+            <CheckBox fx:id="isCliente" layoutX="520.0" layoutY="80.0" mnemonicParsing="false" text="Cliente" />
+            <CheckBox fx:id="isFunc" layoutX="627.0" layoutY="80.0" mnemonicParsing="false" text="Funcionário" />
+            <Label layoutX="503.0" layoutY="343.0" text="Quantidade:" />
+            <TextField fx:id="amountField" layoutX="591.0" layoutY="338.0" prefHeight="31.0" prefWidth="142.0" />
+            <Button fx:id="searchProduct" layoutX="286.0" layoutY="6.0" mnemonicParsing="false" onAction="#searchProduct" text="Buscar" />
+            <Button fx:id="addNewProduct" layoutX="487.0" layoutY="389.0" mnemonicParsing="false" onAction="#addNewProduct" text="Adicionar" visible="false" />
+            <Button fx:id="removeProduct" layoutX="586.0" layoutY="389.0" mnemonicParsing="false" onAction="#removeProduct" text="Remover" visible="false" />
+            <Button fx:id="editProduct" layoutX="680.0" layoutY="389.0" mnemonicParsing="false" onAction="#editProduct" text="Alterar" visible="false" />
+         </children>
+      </AnchorPane>
+      <Pane layoutY="556.0" prefHeight="44.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="556.0">
+         <children>
+            <TextField fx:id="hostField" layoutX="215.0" layoutY="7.0" promptText="127.0.0.1" />
+            <TextField fx:id="portField" layoutX="452.0" layoutY="7.0" prefHeight="31.0" prefWidth="63.0" promptText="5000" />
+            <Label layoutX="124.0" layoutY="12.0" text="Server Host:" />
+            <Label layoutX="412.0" layoutY="12.0" text="Port:" />
+            <Button fx:id="connect" layoutX="584.0" layoutY="7.0" mnemonicParsing="false" onAction="#connectToServe" text="Conectar" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
