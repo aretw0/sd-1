@@ -96,7 +96,7 @@ public class ViewController implements Initializable{
 				}else {
 					// limpa os campos
 					nameField.clear();
-					typeField.getSelectionModel().clearSelection();
+//					typeField.getSelectionModel().clearSelection();
 					priceField.clear();
 					amountField.clear();
 				}

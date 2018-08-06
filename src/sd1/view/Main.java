@@ -1,6 +1,12 @@
 package sd1.view;
 import javafx.application.Application;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import sd1.clients.StoreClient;
 import sd1.servers.StoreServer;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
