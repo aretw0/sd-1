@@ -159,21 +159,27 @@ public class ProductList {
 	public boolean update(ProductChange p) {
 		// TODO revisar isso
 		for (Product product : productList) {
+			// se código novo for igual a alguém mas esse alguém não o código velho então não pode atualizar
 			if ((product.getCod() == p.getCod()) && (product.getCod() != p.getOldCod())) {
 				return false;
 			}
+			// se o novo nome for igual ao de alguém mas esse alguém não é quem estamos atualizando então não
 			if (product.getName().equals(p.getName())) {
 				if (product.getCod() != p.getOldCod()) {
 					return false;
 				}
 			}
 			
+			// se achamos quem vamos atualizar
 			if (product.getCod() == p.getOldCod()) {
-				if (product.getName() != p.getName()) {
+				// e o campo novo vai ser atualizado
+				if (!product.getName().equals(p.getName())) {
+					// se esse nome ja existir não atualize
 					if (contains(p.getName())) {
 						return false;
 					}
 				}
+				// se chegar aqui então tudo bem, pode atualizar
 				product.setProduct(p);
 				return true;
 			}

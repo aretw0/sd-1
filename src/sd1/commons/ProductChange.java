@@ -79,6 +79,14 @@ public class ProductChange {
 		this.name = name;
 		this.amount = amount;
 	}
+	public ProductChange(int cod, int type, double price, String name, int amount) {
+		this.oldCod = cod;
+		this.cod = cod;
+		this.type = type;
+		this.price = price;
+		this.name = name;
+		this.amount = amount;
+	}
 	public ProductChange(int oldCod, Product p) {
 		this.oldCod = oldCod;
 		this.cod = p.getCod();
@@ -87,5 +95,15 @@ public class ProductChange {
 		this.name = p.getName();
 		this.amount = p.getAmount();
 	}
+	
+	public ProductChange(Product p) {
+		this.oldCod = p.getCod();
+		this.cod = p.getCod();
+		this.type = p.getType();
+		this.price = p.getPrice();
+		this.name = p.getName();
+		this.amount = p.getAmount();
+	}
+	
 	public ProductChange() {}
 }
