@@ -53,10 +53,12 @@ public class ClientPool implements Runnable {
 										res = JsonTools.gsonExpose.fromJson(rs, Response.class);
 										if (res != null) {
 											// Debug 2
-											System.out.println("\n-- Recebido --\n" + res.toString());
+//											System.out.println("\n-- Recebido --\n" + res.toString());
 											if ((res.getCod() == Response.SUCCESS) || (res.getCod() == Response.NOT_MOD)) {
 												if (res.getCod() == Response.SUCCESS) {
+//													System.out.println("Lista Atualizada");
 													StoreClient.getPdl().setProductList(JsonTools.PLFromJson(res.getData().toString()));
+													// TODO atualizar a lista de produtos da view (como?)
 												}
 											} else {
 												break;

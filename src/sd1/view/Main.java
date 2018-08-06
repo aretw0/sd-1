@@ -1,6 +1,7 @@
 package sd1.view;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import sd1.servers.StoreServer;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +25,17 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-		launch(args);
+		// inicia o servidor em uma thread
+//		Thread t1 = new Thread() {
+//			public void run() {
+//				StoreServer.populateList();
+//
+//				StoreServer.startServer();
+//			}
+//		};
+//		t1.start();
+		
+		launch(args);			
 		
 	}
 }

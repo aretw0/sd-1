@@ -117,7 +117,7 @@ public class StoreHandler implements Runnable {
 						}
 						break;
 					case Request.DEL:
-						// Remover produto por nome
+						// Remover produto por nome TODO não deveria ser pod código?
 						if (req.getData() != null) {
 							if (StoreServer.getPdl().remove(req.getData().toString())) {
 								this.doResponse(new Response(Response.SUCCESS));
@@ -149,7 +149,7 @@ public class StoreHandler implements Runnable {
 						}
 						break;
 					case Request.UPD:
-						// Atualizar produto
+						// Atualizar produto						
 						if (req.getData() != null) {
 							if (StoreServer.getPdl().update(JsonTools.gsonExpose.fromJson(req.getData().toString(), ProductChange.class))) {								
 								this.doResponse(new Response(Response.SUCCESS));

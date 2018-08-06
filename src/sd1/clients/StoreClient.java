@@ -224,7 +224,8 @@ public class StoreClient {
 		}
 	
 		// IMPORTANTE FORMA DE RECUPERAÇÃO!!!!
-		return new ProductList(JsonTools.PLFromJson(res.getData().toString()));
+		pdl = new ProductList(JsonTools.PLFromJson(res.getData().toString()));
+		return pdl;
 	}
 	
 	public static Product getProduct(int cod) {
@@ -263,7 +264,7 @@ public class StoreClient {
 	
 	public static boolean updProduct(Product pd) {
 		Response res = doRequest(new Request(Request.UPD,pd));
-		
+
 		if (res == null) {
 			return false;
 		}

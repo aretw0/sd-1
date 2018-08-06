@@ -15,7 +15,7 @@ public class StoreServer {
 	
 	private static boolean doServer = true;
 	
-	private static void populateList() {
+	public static void populateList() {
 		Product p1 = new Product(Product.FOOD,7.89,"Carne",3);
         Product p2 = new Product(Product.FOOD,5,"Frango");
         Product p3  = new Product(Product.PHONE,700.82,"Moto G",2);

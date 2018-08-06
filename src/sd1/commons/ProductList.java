@@ -6,10 +6,13 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.reflect.TypeToken;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class ProductList {
 
 	@Expose
-	private List<Product> productList = new ArrayList<Product>();
+	private ObservableList<Product> productList = FXCollections.observableArrayList();
 	
 	public boolean equals(List<Product> pl) {
 		if (this.productList.size() == pl.size()) {
@@ -23,14 +26,14 @@ public class ProductList {
 		}
 		return true;
 	}
-	public List<Product> copy() {
-		List<Product> newOne = new ArrayList<Product>();
+	public ObservableList<Product> copy() {
+		ObservableList<Product> newOne = FXCollections.observableArrayList();
 		for (Product product : this.productList) {
 			newOne.add(new Product(product));
 		}
 		return newOne;
 	}
-	public List<Product> getList() {
+	public ObservableList<Product> getList() {
 		return this.productList;
 	}
 	public int getLength() {
@@ -154,6 +157,7 @@ public class ProductList {
 		return false;
 	}
 	public boolean update(ProductChange p) {
+		// TODO revisar isso
 		for (Product product : productList) {
 			if ((product.getCod() == p.getCod()) && (product.getCod() != p.getOldCod())) {
 				return false;
@@ -248,10 +252,8 @@ public class ProductList {
 	public ProductList() {}
 	
 	// Cria uma nova lista a partir de outra sem pegar a referência
-	public ProductList(List<Product> pl) {
-		for (Product product : pl) {
-			this.productList.add(new Product(product));
-		}
+	public ProductList(ObservableList<Product> list) {
+		this.productList = list;
 	}
 	// Cria uma nova lista a partir de outra sem pegar a referência
 	public ProductList(ProductList pl) {

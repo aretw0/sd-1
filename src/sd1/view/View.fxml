@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -26,19 +27,19 @@
             <Label layoutX="547.0" layoutY="154.0" text="Produto Selecionado:" />
             <Label layoutX="503.0" layoutY="252.0" text="Tipo:" />
             <Label layoutX="499.0" layoutY="302.0" text="Preço:" />
-            <TextField fx:id="searchField" layoutX="68.0" layoutY="6.0" promptText="buscar" />
-            <TextField fx:id="nameField" layoutX="546.0" layoutY="202.0" />
-            <TextField fx:id="typeField" layoutX="546.0" layoutY="248.0" />
-            <TextField fx:id="priceField" layoutX="546.0" layoutY="297.0" />
-            <Button fx:id="buyProduct" layoutX="579.0" layoutY="389.0" mnemonicParsing="false" onAction="#buyProduct" text="Comprar" />
+            <Label layoutX="503.0" layoutY="343.0" text="Quantidade:" />
             <CheckBox fx:id="isCliente" layoutX="520.0" layoutY="80.0" mnemonicParsing="false" text="Cliente" />
             <CheckBox fx:id="isFunc" layoutX="627.0" layoutY="80.0" mnemonicParsing="false" text="Funcionário" />
-            <Label layoutX="503.0" layoutY="343.0" text="Quantidade:" />
-            <TextField fx:id="amountField" layoutX="591.0" layoutY="338.0" prefHeight="31.0" prefWidth="142.0" />
             <Button fx:id="searchProduct" layoutX="286.0" layoutY="6.0" mnemonicParsing="false" onAction="#searchProduct" text="Buscar" />
-            <Button fx:id="addNewProduct" layoutX="487.0" layoutY="389.0" mnemonicParsing="false" onAction="#addNewProduct" text="Adicionar" visible="false" />
-            <Button fx:id="removeProduct" layoutX="586.0" layoutY="389.0" mnemonicParsing="false" onAction="#removeProduct" text="Remover" visible="false" />
-            <Button fx:id="editProduct" layoutX="680.0" layoutY="389.0" mnemonicParsing="false" onAction="#editProduct" text="Alterar" visible="false" />
+            <TextField fx:id="searchField" layoutX="68.0" layoutY="6.0" promptText="buscar" />
+            <TextField fx:id="nameField" layoutX="546.0" layoutY="202.0" />
+            <ComboBox fx:id="typeField" layoutX="546.0" layoutY="247.0" prefHeight="31.0" prefWidth="186.0" />
+            <TextField fx:id="priceField" layoutX="546.0" layoutY="297.0" />
+            <TextField fx:id="amountField" layoutX="591.0" layoutY="338.0" prefHeight="31.0" prefWidth="142.0" />
+            <Button fx:id="buyProduct" layoutX="579.0" layoutY="389.0" mnemonicParsing="false" onAction="#buyProduct" text="Comprar" visible="false" />
+            <Button fx:id="addNewProduct" layoutX="487.0" layoutY="389.0" mnemonicParsing="false" onAction="#addNewProduct" text="Adicionar" />
+            <Button fx:id="removeProduct" layoutX="586.0" layoutY="389.0" mnemonicParsing="false" onAction="#removeProduct" text="Remover" />
+            <Button fx:id="editProduct" layoutX="680.0" layoutY="389.0" mnemonicParsing="false" onAction="#editProduct" text="Alterar" />
          </children>
       </AnchorPane>
       <Pane layoutY="556.0" prefHeight="44.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="556.0">
@@ -50,5 +51,6 @@
             <Button fx:id="connect" layoutX="584.0" layoutY="7.0" mnemonicParsing="false" onAction="#connectToServe" text="Conectar" />
          </children>
       </Pane>
+      <ComboBox layoutX="-150.0" layoutY="-68.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
