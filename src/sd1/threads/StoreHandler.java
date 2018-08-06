@@ -196,7 +196,8 @@ public class StoreHandler implements Runnable {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
-							}							
+							}
+							this.doResponse(new Response(Response.NOT_MOD));
 						} else {
 							this.doResponse(new Response(Response.NOT_MOD));
 						}
