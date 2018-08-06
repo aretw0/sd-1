@@ -224,8 +224,7 @@ public class StoreClient {
 		}
 	
 		// IMPORTANTE FORMA DE RECUPERAÇÃO!!!!
-		pdl = new ProductList(JsonTools.PLFromJson(res.getData().toString()));
-		return pdl;
+		return new ProductList(JsonTools.PLFromJson(res.getData().toString())); 
 	}
 	
 	public static Product getProduct(int cod) {

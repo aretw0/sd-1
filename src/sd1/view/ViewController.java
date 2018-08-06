@@ -223,7 +223,6 @@ public class ViewController implements Initializable{
 			portField.setDisable(true);
 			connect.setDisable(true);	
 			addNewProduct.setDisable(false);
-			StoreClient.getList();
 			productTableCliente.setItems(StoreClient.getPdl().getList());
 			
 		}else {
