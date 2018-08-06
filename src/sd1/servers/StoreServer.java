@@ -13,7 +13,7 @@ public class StoreServer {
 	private static ProductList pdl = new ProductList();
 	private static PoolList pl = new PoolList();
 	
-	private static boolean doServer = true;
+	public static boolean doServer = false;
 	
 	public static void populateList() {
 		Product p1 = new Product(Product.FOOD,7.89,"Carne",3);
@@ -90,6 +90,8 @@ public class StoreServer {
 			serverSocket = new ServerSocket(5000);
 			System.out.println("\n\nIniciando servidor TCP...\n");
 	        System.out.println("Servidor pronto para receber conexões...\n\n");
+	        
+	        StoreServer.doServer = true;
 	        
 	        while(StoreServer.doServer) {
 	        	// O metodo accept retorna um socket para comunicação com o próximo 

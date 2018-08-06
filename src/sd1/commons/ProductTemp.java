@@ -36,7 +36,7 @@ public class ProductTemp {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.replace(' ', '_');;
 	}
 
 	public int getAmount() {
@@ -55,13 +55,13 @@ public class ProductTemp {
 	public ProductTemp(int type, double price, String name, int amount) {
 		this.type = type;
 		this.price = price;
-		this.name = name;
+		this.name = name.replace(' ', '_');;
 		this.amount = amount;
 	}
 	public ProductTemp(int type, double price, String name) {
 		this.type = type;
 		this.price = price;
-		this.name = name;
+		this.name = name.replace(' ', '_');;
 		this.amount = 0;
 	}
 	public ProductTemp() {}

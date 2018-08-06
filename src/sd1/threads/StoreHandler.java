@@ -107,6 +107,7 @@ public class StoreHandler implements Runnable {
 					case Request.ADD:
 						// Adicionar Produto
 						if (req.getData() != null) {
+//							if (StoreServer.getPdl().push(JsonTools.gsonExpose.fromJson(req.getData().toString(),Product.class))) {1
 							if (StoreServer.getPdl().push(JsonTools.gsonExpose.fromJson(req.getData().toString(),ProductTemp.class))) {								
 								this.doResponse(new Response(Response.SUCCESS));
 							} else {

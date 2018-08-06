@@ -56,7 +56,7 @@ public class ProductChange {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.replace(' ', '_');;
 	}
 
 	public int getAmount() {
@@ -76,7 +76,7 @@ public class ProductChange {
 		this.cod = cod;
 		this.type = type;
 		this.price = price;
-		this.name = name;
+		this.name = name.replace(' ', '_');;
 		this.amount = amount;
 	}
 	public ProductChange(int cod, int type, double price, String name, int amount) {
@@ -84,7 +84,7 @@ public class ProductChange {
 		this.cod = cod;
 		this.type = type;
 		this.price = price;
-		this.name = name;
+		this.name = name.replace(' ', '_');;
 		this.amount = amount;
 	}
 	public ProductChange(int oldCod, Product p) {

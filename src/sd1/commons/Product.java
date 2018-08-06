@@ -88,7 +88,7 @@ public class Product {
 	}
 	
 	public boolean equals(Product p) {
-		return ((p.getCod() == this.cod)&&(this.name.equals(p.getName()))&&(p.getAmount() == this.amount) && (p.getType() == this.type)&&(p.getPrice() == this.price));
+		return ((p.getCod() == this.cod)&&(this.name.toLowerCase().equals(p.getName().toLowerCase()))&&(p.getAmount() == this.amount) && (p.getType() == this.type)&&(p.getPrice() == this.price));
 	}
 	
 	public void setProduct(Product p) {
@@ -117,6 +117,14 @@ public class Product {
 	}
 	public Product(int type, double price, String name, int amount) {
 		this.cod = Product.codSeed++;
+		this.type = type;
+		this.price = price;
+		this.name = name.replace(' ', '_');
+		this.amount = amount;
+	}
+	
+	public Product(int cod,int type, double price, String name, int amount) {
+		this.cod = cod;
 		this.type = type;
 		this.price = price;
 		this.name = name.replace(' ', '_');

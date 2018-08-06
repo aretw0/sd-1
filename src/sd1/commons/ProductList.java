@@ -68,7 +68,7 @@ public class ProductList {
 	// se igual o nome contém
 	public boolean contains(String name) {
 		for (Product product : productList) {
-			if (product.getName().equals(name)) {
+			if (product.getName().toLowerCase().equals(name.toLowerCase())) {
 				return true;
 			}
 		}
@@ -78,7 +78,7 @@ public class ProductList {
 	// Se igual o cod ou o nome contém
 	public boolean contains(int cod,String name) {
 		for (Product product : productList) {
-			if ((product.getName().equals(name)) || (product.getCod() == cod)) {
+			if ((product.getName().toLowerCase().equals(name.toLowerCase())) || (product.getCod() == cod)) {
 				return true;
 			}
 		}
@@ -140,7 +140,7 @@ public class ProductList {
 //		System.out.println(name);
 		for (Product product : this.productList) {
 			// Por algum motivo a string do Gson vem diferente então precisa ser comparado assim
-			if (product.getName().equals(name)) {
+			if (product.getName().toLowerCase().equals(name.toLowerCase())) {
 				return this.productList.remove(product);
 			}
 		}
@@ -164,7 +164,7 @@ public class ProductList {
 				return false;
 			}
 			// se o novo nome for igual ao de alguém mas esse alguém não é quem estamos atualizando então não
-			if (product.getName().equals(p.getName())) {
+			if (product.getName().toLowerCase().equals(p.getName().toLowerCase())) {
 				if (product.getCod() != p.getOldCod()) {
 					return false;
 				}
@@ -173,7 +173,7 @@ public class ProductList {
 			// se achamos quem vamos atualizar
 			if (product.getCod() == p.getOldCod()) {
 				// e o campo novo vai ser atualizado
-				if (!product.getName().equals(p.getName())) {
+				if (!product.getName().toLowerCase().equals(p.getName().toLowerCase())) {
 					// se esse nome ja existir não atualize
 					if (contains(p.getName())) {
 						return false;
@@ -189,7 +189,7 @@ public class ProductList {
 	
 	public Product getProduct(String name) {
 		for (Product product : productList) {
-			if (product.getName().equals(name)) {
+			if (product.getName().toLowerCase().equals(name.toLowerCase())) {
 				return product;
 			}
 		}
