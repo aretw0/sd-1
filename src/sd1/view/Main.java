@@ -24,16 +24,7 @@ public class Main extends Application {
 		}
 	}
 	
-	public static void main(String[] args) {
-		// inicia o servidor em uma thread
-//		Thread t1 = new Thread() {
-//			public void run() {
-//				StoreServer.populateList();
-//
-//				StoreServer.startServer();
-//			}
-//		};
-//		t1.start();
+	public static void main(String[] args) {	
 		
 		launch(args);			
 		

@@ -19,8 +19,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import sd1.clients.StoreClient;
 import sd1.commons.Product;
 import sd1.commons.ProductChange;
-import sd1.commons.ProductList;
 import sd1.commons.ProductTemp;
+import sd1.servers.StoreServer;
 
 public class ViewController implements Initializable{	
 	
@@ -41,11 +41,13 @@ public class ViewController implements Initializable{
 	@FXML private Button addNewProduct;
 	@FXML private Button removeProduct;
 	@FXML private Button editProduct;
+	@FXML private Button serverButton;
 	@FXML private CheckBox isCliente;
 	@FXML private CheckBox isFunc;
 	@FXML private TextField searchField;
 	@FXML private TextField hostField;
 	@FXML private TextField portField;
+//	@FXML private TextField codField;
 	@FXML private TextField nameField;
 	@FXML private ComboBox<String> typeField;
 	@FXML private TextField priceField;
@@ -101,7 +103,7 @@ public class ViewController implements Initializable{
 			}						
 						
 		});	  
-		// Inicializa no modo cliente
+		// Inicializa no modo funcionário
 		isFunc.setSelected(true);
 		
 		// altera os botões quando o modo cliente é selecionado
@@ -175,12 +177,20 @@ public class ViewController implements Initializable{
 	
 	@FXML
 	public void addNewProduct() {
+		// sem cod
 		if (StoreClient.addProduct(new ProductTemp(typeField.getSelectionModel().getSelectedIndex(),
 												Double.valueOf(priceField.getText()), 
 												nameField.getText(), 
 												Integer.parseInt(amountField.getText())))) {
-			// TODO fazer com q a lista seja atualizada sem dar o get novamente			
+			
 		}
+		// com cod
+//		if (StoreClient.addProduct(new Product(Integer.parseInt(codField.getText()), typeField.getSelectionModel().getSelectedIndex(),
+//				Double.valueOf(priceField.getText()), 
+//				nameField.getText(), 
+//				Integer.parseInt(amountField.getText())))) {
+//
+//		}
 		productTableCliente.getSelectionModel().clearSelection();
 		nameField.clear();
 		typeField.getSelectionModel().clearSelection();
@@ -203,33 +213,62 @@ public class ViewController implements Initializable{
 	public void editProduct() {
 		Product selected = productTableCliente.getSelectionModel().getSelectedItem();
 		if (selected != null) {
+			// sem cod
 			StoreClient.updProduct(new ProductChange(selected.getCod(), selected.getCod(),
 																		typeField.getSelectionModel().getSelectedIndex(),
 																		Double.valueOf(priceField.getText()), 
 																		nameField.getText(), 
 																		Integer.parseInt(amountField.getText())));
-			productTableCliente.getSelectionModel().clearSelection();
+			// com cod
+//			StoreClient.updProduct(new ProductChange(selected.getCod(), Integer.parseInt(codField.getText()),
+//					typeField.getSelectionModel().getSelectedIndex(),
+//					Double.valueOf(priceField.getText()), 
+//					nameField.getText(), 
+//					Integer.parseInt(amountField.getText())));
+//			productTableCliente.getSelectionModel().clearSelection();
 		}
 	}
 	
 	@FXML
 	public void connectToServe() {
-		StoreClient.setHostAdd(hostField.getText());
-		StoreClient.setHostPort(Integer.parseInt(portField.getText()));
 		
-		if (StoreClient.startPoolList()) {
-			// desativa os campos de conexão e ativa o botão de adicionar produto
-			hostField.setDisable(true);
-			portField.setDisable(true);
-			connect.setDisable(true);	
-			addNewProduct.setDisable(false);
-			productTableCliente.setItems(StoreClient.getPdl().getList());
+		if (!StoreClient.hasPoolStarted()) {
+			StoreClient.setHostAdd(hostField.getText());
+			StoreClient.setHostPort(Integer.parseInt(portField.getText()));
 			
+			if (StoreClient.startPoolList()) {
+				// desativa os campos de conexão e ativa o botão de adicionar produto
+				hostField.setDisable(true);
+				portField.setDisable(true);
+				connect.setText("Desconectar da Pool");	
+				addNewProduct.setDisable(false);
+				productTableCliente.setItems(StoreClient.getPdl().getList());
+				
+			}
 		}else {
-			
+			StoreClient.stopPoolList();
+			connect.setText("Conectar a Pool");
 		}
 		
 		
 	}
 	
+	@FXML
+	public void startServe() {
+		if (!StoreServer.doServer) {
+			// inicia o servidor em uma thread
+			Thread t1 = new Thread() {
+				public void run() {
+					StoreServer.populateList();
+		
+					StoreServer.startServer();
+				}
+			};
+			t1.start();
+			serverButton.setText("Desligar Servidor");
+		}else {
+			StoreServer.shutdownServer();
+			serverButton.setText("Iniciar Servidor");
+		}
+	}
 }

@@ -23,16 +23,18 @@
                   <TableColumn fx:id="clmnamount" editable="false" prefWidth="98.0" text="Quantidade" />
                </columns>
             </TableView>
+            <Label layoutX="508.0" layoutY="174.0" text="Cod:" visible="false" />
             <Label layoutX="497.0" layoutY="207.0" text="Nome:" />
-            <Label layoutX="547.0" layoutY="154.0" text="Produto Selecionado:" />
+            <Label layoutX="548.0" layoutY="145.0" text="Produto Selecionado:" />
             <Label layoutX="503.0" layoutY="252.0" text="Tipo:" />
             <Label layoutX="499.0" layoutY="302.0" text="Preço:" />
             <Label layoutX="503.0" layoutY="343.0" text="Quantidade:" />
             <CheckBox fx:id="isCliente" layoutX="520.0" layoutY="80.0" mnemonicParsing="false" text="Cliente" />
             <CheckBox fx:id="isFunc" layoutX="627.0" layoutY="80.0" mnemonicParsing="false" text="Funcionário" />
             <Button fx:id="searchProduct" layoutX="286.0" layoutY="6.0" mnemonicParsing="false" onAction="#searchProduct" text="Buscar" />
+            <TextField fx:id="codField" layoutX="546.0" layoutY="166.0" visible="false" />
             <TextField fx:id="searchField" layoutX="68.0" layoutY="6.0" promptText="buscar" />
-            <TextField fx:id="nameField" layoutX="546.0" layoutY="202.0" />
+            <TextField fx:id="nameField" layoutX="546.0" layoutY="204.0" />
             <ComboBox fx:id="typeField" layoutX="546.0" layoutY="247.0" prefHeight="31.0" prefWidth="186.0" />
             <TextField fx:id="priceField" layoutX="546.0" layoutY="297.0" />
             <TextField fx:id="amountField" layoutX="591.0" layoutY="338.0" prefHeight="31.0" prefWidth="142.0" />
@@ -40,15 +42,16 @@
             <Button fx:id="addNewProduct" layoutX="487.0" layoutY="389.0" mnemonicParsing="false" onAction="#addNewProduct" text="Adicionar" />
             <Button fx:id="removeProduct" layoutX="586.0" layoutY="389.0" mnemonicParsing="false" onAction="#removeProduct" text="Remover" />
             <Button fx:id="editProduct" layoutX="680.0" layoutY="389.0" mnemonicParsing="false" onAction="#editProduct" text="Alterar" />
+            <Button fx:id="serverButton" layoutX="570.0" layoutY="14.0" mnemonicParsing="false" onAction="#startServe" text="Iniciar Servidor" />
          </children>
       </AnchorPane>
       <Pane layoutY="556.0" prefHeight="44.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="556.0">
          <children>
-            <TextField fx:id="hostField" layoutX="215.0" layoutY="7.0" promptText="127.0.0.1" />
-            <TextField fx:id="portField" layoutX="452.0" layoutY="7.0" prefHeight="31.0" prefWidth="63.0" promptText="5000" />
-            <Label layoutX="124.0" layoutY="12.0" text="Server Host:" />
-            <Label layoutX="412.0" layoutY="12.0" text="Port:" />
-            <Button fx:id="connect" layoutX="584.0" layoutY="7.0" mnemonicParsing="false" onAction="#connectToServe" text="Conectar" />
+            <TextField fx:id="hostField" layoutX="167.0" layoutY="7.0" promptText="127.0.0.1" />
+            <TextField fx:id="portField" layoutX="404.0" layoutY="7.0" prefHeight="31.0" prefWidth="63.0" promptText="5000" />
+            <Label layoutX="76.0" layoutY="12.0" text="Server Host:" />
+            <Label layoutX="364.0" layoutY="12.0" text="Port:" />
+            <Button fx:id="connect" layoutX="569.0" layoutY="7.0" mnemonicParsing="false" onAction="#connectToServe" text="Conectar a Pool" />
          </children>
       </Pane>
       <ComboBox layoutX="-150.0" layoutY="-68.0" prefWidth="150.0" />
