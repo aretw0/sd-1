@@ -96,8 +96,8 @@ public class ViewController implements Initializable{
 				}else {
 					// limpa os campos
 					nameField.clear();
-//					typeField.getSelectionModel().clearSelection();
 					priceField.clear();
+//					typeField.getSelectionModel().clearSelection();
 					amountField.clear();
 				}
 			}						
@@ -136,8 +136,8 @@ public class ViewController implements Initializable{
             	
             	// Fields
             	nameField.setEditable(true);
-            	typeField.setEditable(true);
-            	priceField.setDisable(false);
+            	typeField.setDisable(false);
+            	priceField.setEditable(true);
             	amountField.setEditable(true);
             }
 
@@ -192,10 +192,10 @@ public class ViewController implements Initializable{
 //
 //		}
 		productTableCliente.getSelectionModel().clearSelection();
-		nameField.clear();
-		typeField.getSelectionModel().clearSelection();
-		priceField.clear();
-		amountField.clear();
+//		nameField.clear();
+//		typeField.getSelectionModel().clearSelection();
+//		priceField.clear();
+//		amountField.clear();
 		
 	}
 	
